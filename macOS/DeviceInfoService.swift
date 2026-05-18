@@ -1,9 +1,8 @@
 import Foundation
 import CryptoKit
-import CoreWLAN
 import Network
 import IOKit
-import IOKit.network
+import Darwin
 
 final class DeviceInfoService {
     struct DeviceInfo: Encodable {
@@ -255,8 +254,79 @@ final class DeviceInfoService {
     }
 
     private static func wifiMACAddress() -> String {
-        guard let interface = CWWiFiClient.shared().interface() else { return "" }
-        return interface.hardwareAddress() ?? ""
+        guard let interfaceName = wifiInterfaceName() else { return "" }
+        return macAddress(forBSDInterfaceName: interfaceName)
+    }
+
+    private static func wifiInterfaceName() -> String? {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/sbin/system_profiler")
+        process.arguments = ["SPAirPortDataType", "-json"]
+
+        let output = Pipe()
+        process.standardOutput = output
+        process.standardError = Pipe()
+
+        do {
+            try process.run()
+            process.waitUntilExit()
+        } catch {
+            return nil
+        }
+
+        guard process.terminationStatus == 0 else { return nil }
+        let data = output.fileHandleForReading.readDataToEndOfFile()
+        guard
+            let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            let airportItems = object["SPAirPortDataType"] as? [[String: Any]]
+        else {
+            return nil
+        }
+
+        for item in airportItems {
+            guard let interfaces = item["spairport_airport_interfaces"] as? [[String: Any]] else {
+                continue
+            }
+            if let name = interfaces.compactMap({ $0["_name"] as? String }).first(where: { !$0.isEmpty }) {
+                return name
+            }
+        }
+
+        return nil
+    }
+
+    private static func macAddress(forBSDInterfaceName interfaceName: String) -> String {
+        var addresses: UnsafeMutablePointer<ifaddrs>?
+        guard getifaddrs(&addresses) == 0, let firstAddress = addresses else {
+            return ""
+        }
+        defer { freeifaddrs(addresses) }
+
+        for address in sequence(first: firstAddress, next: { $0.pointee.ifa_next }) {
+            let interface = address.pointee
+            guard
+                let name = interface.ifa_name,
+                String(cString: name) == interfaceName,
+                let socketAddress = interface.ifa_addr,
+                socketAddress.pointee.sa_family == UInt8(AF_LINK)
+            else {
+                continue
+            }
+
+            let linkAddress = socketAddress.withMemoryRebound(to: sockaddr_dl.self, capacity: 1) { $0.pointee }
+            let nameLength = Int(linkAddress.sdl_nlen)
+            let addressLength = Int(linkAddress.sdl_alen)
+            guard addressLength == 6 else { return "" }
+
+            let bytes = withUnsafeBytes(of: linkAddress.sdl_data) { buffer in
+                guard nameLength + addressLength <= buffer.count else { return [UInt8]() }
+                return Array(buffer[nameLength..<(nameLength + addressLength)])
+            }
+            guard bytes.count == 6 else { return "" }
+            return bytes.map { String(format: "%02X", $0) }.joined(separator: ":")
+        }
+
+        return ""
     }
 
     private static func normalizedMACAddress(_ macAddress: String) -> String {
