@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{aa58098e-b18e-46fe-8976-93655306ae4f}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{ce00de27-4685-4a90-ab85-f1097446bfe0}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{084e83cf-7880-480b-9c2e-e9799ad81461}</UniqueIdentifier>
+      <Extensions>rc;ico;manifest</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Windows\app_config.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="Windows\device_info.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="Windows\http_server.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="Windows\main.cpp"><Filter>Source Files</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Windows\app_config.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="Windows\device_info.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="Windows\http_server.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="Windows\resource.h"><Filter>Header Files</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Windows\app.rc"><Filter>Resource Files</Filter></ResourceCompile>
+  </ItemGroup>
+</Project>
