@@ -1,0 +1,8 @@
+.DS_Store
+Thumbs.db
+*.log
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/xcshareddata/
+
+macOS/Config.xcconfig
