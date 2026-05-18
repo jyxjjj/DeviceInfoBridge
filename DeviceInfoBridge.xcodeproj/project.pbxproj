@@ -8,12 +8,26 @@
 
 /* Begin PBXFileReference section */
 		50E4F1522FBA998C003C6908 /* DeviceInfoBridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeviceInfoBridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50E4F16C2FBA9D60003C6908 /* DeviceInfoBridge-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "DeviceInfoBridge-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		50E4F1712FBA9D60003C6908 /* Exceptions for "macOS" folder in "DeviceInfoBridge" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Config.xcconfig,
+				Config.xcconfig.example,
+				Info.plist,
+			);
+			target = 50E4F1512FBA998C003C6908 /* DeviceInfoBridge */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		50E4F1542FBA998C003C6908 /* macOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				50E4F1712FBA9D60003C6908 /* Exceptions for "macOS" folder in "DeviceInfoBridge" target */,
+			);
 			path = macOS;
 			sourceTree = "<group>";
 		};
@@ -33,7 +47,6 @@
 		50E4F1492FBA998C003C6908 = {
 			isa = PBXGroup;
 			children = (
-				50E4F16C2FBA9D60003C6908 /* DeviceInfoBridge-Info.plist */,
 				50E4F1542FBA998C003C6908 /* macOS */,
 				50E4F1532FBA998C003C6908 /* Products */,
 			);
@@ -129,6 +142,8 @@
 /* Begin XCBuildConfiguration section */
 		50E4F15B2FBA998D003C6908 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 50E4F1542FBA998C003C6908 /* macOS */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -180,6 +195,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_AllowedOrigins = "$(ALLOWED_ORIGINS)";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -193,6 +209,8 @@
 		};
 		50E4F15C2FBA998D003C6908 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 50E4F1542FBA998C003C6908 /* macOS */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -238,6 +256,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_AllowedOrigins = "$(ALLOWED_ORIGINS)";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -271,7 +290,8 @@
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "DeviceInfoBridge-Info.plist";
+				INFOPLIST_FILE = macOS/Info.plist;
+				INFOPLIST_KEY_AllowedOrigins = "$(ALLOWED_ORIGINS)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright (C) 2026 DESMG All Rights Reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -316,7 +336,8 @@
 				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "DeviceInfoBridge-Info.plist";
+				INFOPLIST_FILE = macOS/Info.plist;
+				INFOPLIST_KEY_AllowedOrigins = "$(ALLOWED_ORIGINS)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright (C) 2026 DESMG All Rights Reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
