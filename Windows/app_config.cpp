@@ -65,8 +65,9 @@ std::wstring ExecutableDirectory() {
 
 std::string ReadIniAllowedOrigins() {
     const std::wstring path = ExecutableDirectory() + L"\\DeviceInfoBridge.ini";
-    FILE* file = _wfopen(path.c_str(), L"rb");
-    if (file == nullptr) {
+    // 使用 _wfopen_s 替代已弃用的 _wfopen，满足 SDL 安全检查
+    FILE* file = nullptr;
+    if (_wfopen_s(&file, path.c_str(), L"rb") != 0 || file == nullptr) {
         return "";
     }
 

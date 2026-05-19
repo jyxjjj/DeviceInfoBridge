@@ -94,5 +94,9 @@
   <ItemGroup>
     <Image Include="Windows\app.ico" />
   </ItemGroup>
+  <!-- 使用自定义清单（含 Win10+ 兼容性 GUID），由链接器嵌入 -->
+  <ItemGroup>
+    <Manifest Include="Windows\app.manifest" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

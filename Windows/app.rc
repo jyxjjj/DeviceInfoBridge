@@ -3,7 +3,7 @@
 
 IDR_MAINFRAME ICON "app.ico"
 
-1 RT_MANIFEST "app.manifest"
+// 清单由 vcxproj 的 Manifest 项交给链接器嵌入，避免与 /manifest:embed 重复
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,0,0,0
