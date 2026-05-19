@@ -1,6 +1,8 @@
 #include <windows.h>
 #include "resource.h"
 
+IDR_MAINFRAME ICON "app.ico"
+
 1 RT_MANIFEST "app.manifest"
 
 VS_VERSION_INFO VERSIONINFO

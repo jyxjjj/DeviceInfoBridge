@@ -1,5 +1,8 @@
 #include "http_server.h"
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
@@ -9,6 +12,7 @@
 #include <cctype>
 #include <sstream>
 #include <string>
+#include <utility>
 
 namespace {
 

@@ -1,10 +1,14 @@
 #include "app_config.h"
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+
 #include <algorithm>
 #include <cctype>
 #include <cstdio>
 #include <vector>
-#include <windows.h>
 
 #ifndef ALLOWED_ORIGINS
 #define ALLOWED_ORIGINS ""
@@ -46,10 +50,10 @@ std::vector<std::string> SplitOrigins(const std::string& value) {
 
 std::wstring ExecutableDirectory() {
     std::wstring path(MAX_PATH, L'\0');
-    DWORD length = GetModuleFileNameW(nullptr, path.data(), static_cast<DWORD>(path.size()));
+    DWORD length = GetModuleFileNameW(nullptr, &path[0], static_cast<DWORD>(path.size()));
     while (length == path.size()) {
         path.resize(path.size() * 2);
-        length = GetModuleFileNameW(nullptr, path.data(), static_cast<DWORD>(path.size()));
+        length = GetModuleFileNameW(nullptr, &path[0], static_cast<DWORD>(path.size()));
     }
     path.resize(length);
     const size_t slash = path.find_last_of(L"\\/");

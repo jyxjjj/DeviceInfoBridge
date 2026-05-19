@@ -3,6 +3,9 @@
 #include "http_server.h"
 #include "resource.h"
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <shellapi.h>
 #include <windows.h>
 
@@ -27,6 +30,11 @@ DeviceInfo g_device_info;
 uint16_t g_active_port = 0;
 bool g_port_failed = false;
 
+HICON LoadAppIcon() {
+    HICON icon = LoadIconW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDR_MAINFRAME));
+    return icon != nullptr ? icon : LoadIconW(nullptr, IDI_APPLICATION);
+}
+
 std::wstring Utf8ToWide(const std::string& value) {
     if (value.empty()) {
         return L"";
@@ -36,7 +44,7 @@ std::wstring Utf8ToWide(const std::string& value) {
         return L"";
     }
     std::wstring result(static_cast<size_t>(size), L'\0');
-    MultiByteToWideChar(CP_UTF8, 0, value.c_str(), -1, result.data(), size);
+    MultiByteToWideChar(CP_UTF8, 0, value.c_str(), -1, &result[0], size);
     result.pop_back();
     return result;
 }
@@ -72,7 +80,7 @@ void AddTrayIcon(HWND window) {
     data.uID = kTrayId;
     data.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
     data.uCallbackMessage = kTrayMessage;
-    data.hIcon = LoadIconW(nullptr, IDI_APPLICATION);
+    data.hIcon = LoadAppIcon();
     wcscpy_s(data.szTip, L"DeviceInfoBridge");
     Shell_NotifyIconW(NIM_ADD, &data);
 }
@@ -174,7 +182,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int) {
     window_class.lpfnWndProc = WindowProc;
     window_class.hInstance = instance;
     window_class.lpszClassName = kWindowClass;
-    window_class.hIcon = LoadIconW(nullptr, IDI_APPLICATION);
+    window_class.hIcon = LoadAppIcon();
     RegisterClassW(&window_class);
 
     HWND window = CreateWindowExW(

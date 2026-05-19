@@ -1,5 +1,8 @@
 #include "device_info.h"
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
@@ -44,7 +47,7 @@ std::string WideToUtf8(const std::wstring& value) {
         return "";
     }
     std::string result(static_cast<size_t>(size), '\0');
-    WideCharToMultiByte(CP_UTF8, 0, value.c_str(), -1, result.data(), size, nullptr, nullptr);
+    WideCharToMultiByte(CP_UTF8, 0, value.c_str(), -1, &result[0], size, nullptr, nullptr);
     result.pop_back();
     return result;
 }
@@ -64,7 +67,7 @@ std::string RegistryString(HKEY root, const wchar_t* path, const wchar_t* name) 
     }
 
     std::wstring value(bytes / sizeof(wchar_t), L'\0');
-    status = RegQueryValueExW(key, name, nullptr, nullptr, reinterpret_cast<LPBYTE>(value.data()), &bytes);
+    status = RegQueryValueExW(key, name, nullptr, nullptr, reinterpret_cast<LPBYTE>(&value[0]), &bytes);
     RegCloseKey(key);
     if (status != ERROR_SUCCESS) {
         return "";

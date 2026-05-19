@@ -91,5 +91,8 @@
   <ItemGroup>
     <ResourceCompile Include="Windows\app.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Windows\app.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
